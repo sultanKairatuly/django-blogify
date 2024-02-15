@@ -1,0 +1,17 @@
+{% extends 'index.html' %} {% block content %}
+<div class="news">
+  <h1 class="news_title">News</h1>
+  <div class="news_items">
+    {% for post in posts %}
+    <div class="news_item">
+      <h1 class="news_item_title">{{ post.title }}</h1>
+      <img class="news_item_image" src="{{post.image}}" alt="post's image" />
+      <button class="more_info">
+        <a href="{% url 'news_detail_page' post.id %}">Подробнее</a>
+      </button>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
