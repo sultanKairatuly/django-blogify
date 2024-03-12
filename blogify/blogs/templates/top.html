@@ -1,0 +1,81 @@
+{% extends 'index.html' %} {% block content %}
+<div>
+  {% if user.is_authenticated %}
+  <div>
+    <h1 style="color: #fff; font-weight: 700; font-size: 35px">Топ 5 лучших</h1>
+    {% for movie in top_movies %}
+    <div
+      style="
+        position: relative;
+        width: 300px;
+        height: 150px;
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+      "
+    >
+      <p
+        class="text-light bg-success fw-bold fs-6 text"
+        style="
+          position: absolute;
+          z-index: 3;
+          top: 5px;
+          left: 5px;
+          padding: 3px;
+        "
+      >
+        {{ movie.rate }}
+      </p>
+      <img
+        style="object-fit: cover; width: 100%; height: 100%"
+        src="{{ movie.image }}"
+        alt="post's image"
+      />
+      <div>
+        <h3 class="text-light fw-bold fs-6 text movie_title">
+          {{ movie.title }}
+        </h3>
+        <button class="watch_btn" type="submit">
+          <a
+            style="width: 100%; height: 100%; text-decoration: none"
+            class="fw-bold fs-10 text-light text"
+            href="{% url 'movies_detail' movie.id %}"
+          >
+            Посмотреть
+          </a>
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="need_auth">
+    <div>
+      <h1
+        style="
+          font-weight: 500;
+          font-size: 25px;
+          text-transform: uppercase;
+          color: #fff;
+        "
+      >
+        Чтобы просматривать контент нужно авторизоваться
+      </h1>
+      <button class="watch_btn" type="submit">
+        <a
+          style="
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            display: block;
+          "
+          class="fw-bold fs-10 text-light text"
+          href="{% url 'login_page' %}"
+        >
+          Войти
+        </a>
+      </button>
+    </div>
+  </div>
+  {% endif %} {% endblock %}
+</div>

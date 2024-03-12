@@ -1,0 +1,11 @@
+{% extends 'index.html' %} {% load crispy_forms_tags %} {% block content %}
+<h1>
+  <form method="post">
+    {% csrf_token %} {{ form|crispy }}
+    <button class="btn watch_btn">Зарегистрироваться</button>
+  </form>
+  <h4 style="color: #fff; margin-top: 20px; font-size: 18px">
+    Уже есть аккаунта? <a href="{% url 'login_page' %}">Войдите</a>
+  </h4>
+</h1>
+{% endblock %}

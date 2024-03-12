@@ -1,0 +1,274 @@
+{% extends 'index.html' %} {% block content %}
+<div>
+  {% if user.is_authenticated %}
+  <div class="movies" style="display: flex; flex-direction: column; gap: 30px">
+    <div>
+      <h1 class="fs-5 text text-light fw-bold">Классика</h1>
+      <div
+        class="movies_items"
+        style="display: flex; gap: 10px; margin-top: 15px"
+      >
+        {% for movie in movies1 %}
+        <div
+          class="movie"
+          style="position: relative; width: 300px; height: 150px"
+        >
+          <p
+            class="text-light bg-success fw-bold fs-6 text"
+            style="
+              position: absolute;
+              z-index: 3;
+              top: 5px;
+              left: 5px;
+              padding: 3px;
+            "
+          >
+            {{ movie.rate }}
+          </p>
+          <img
+            class=""
+            style="
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+            "
+            src="{{ movie.image }}"
+            alt="post's image"
+          />
+          <div class="hover_info">
+            <h3 class="text-light fw-bold fs-6 text movie_title">
+              {{ movie.title }}
+            </h3>
+            <button class="watch_btn" type="submit">
+              <a
+                style="width: 100%; height: 100%; text-decoration: none"
+                class="fw-bold fs-10 text-light text"
+                href="{% url 'movies_detail' movie.id %}"
+              >
+                Посмотреть
+              </a>
+            </button>
+          </div>
+          <div class="hover_info_back"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <h1 class="fs-5 text text-light fw-bold">Топ фильмы</h1>
+      <div
+        class="movies_items"
+        style="display: flex; gap: 10px; margin-top: 15px"
+      >
+        {% for movie in movies2 %}
+        <div
+          class="movie"
+          style="
+            position: relative;
+            width: 300px;
+            height: 150px;
+            cursor: pointer;
+          "
+        >
+          <p
+            class="text-light bg-success fw-bold fs-6 text"
+            style="
+              position: absolute;
+              z-index: 3;
+              top: 5px;
+              left: 5px;
+              padding: 3px;
+            "
+          >
+            {{ movie.rate }}
+          </p>
+          <img
+            class=""
+            style="
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+            "
+            src="{{ movie.image }}"
+            alt="post's image"
+          />
+          <div class="hover_info">
+            <h3 class="text-light fw-bold fs-6 text movie_title">
+              {{ movie.title }}
+            </h3>
+            <button class="watch_btn" type="submit">
+              <a
+                style="width: 100%; height: 100%; text-decoration: none"
+                class="fw-bold fs-10 text-light text"
+                href="{% url 'movies_detail' movie.id %}"
+              >
+                Посмотреть
+              </a>
+            </button>
+          </div>
+          <div class="hover_info_back"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <h1 class="fs-5 text text-light fw-bold">
+        Фильмы, которую могут вас заинтересовать
+      </h1>
+      <div
+        class="movies_items"
+        style="display: flex; gap: 10px; margin-top: 15px"
+      >
+        {% for movie in movies3 %}
+        <div
+          class="movie"
+          style="
+            position: relative;
+            width: 300px;
+            height: 150px;
+            cursor: pointer;
+          "
+        >
+          <p
+            class="text-light bg-success fw-bold fs-6 text"
+            style="
+              position: absolute;
+              z-index: 3;
+              top: 5px;
+              left: 5px;
+              padding: 3px;
+            "
+          >
+            {{ movie.rate }}
+          </p>
+          <img
+            class=""
+            style="
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+            "
+            src="{{ movie.image }}"
+            alt="post's image"
+          />
+          <div class="hover_info">
+            <h3 class="text-light fw-bold fs-6 text movie_title">
+              {{ movie.title }}
+            </h3>
+            <button class="watch_btn" type="submit">
+              <a
+                style="width: 100%; height: 100%; text-decoration: none"
+                class="fw-bold fs-10 text-light text"
+                href="{% url 'movies_detail' movie.id %}"
+              >
+                Посмотреть
+              </a>
+            </button>
+          </div>
+          <div class="hover_info_back"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <h1 class="fs-5 text text-light fw-bold">Недавно вышедшие</h1>
+      <div
+        class="movies_items"
+        style="display: flex; gap: 10px; margin-top: 15px"
+      >
+        {% for movie in movies4 %}
+        <div
+          class="movie"
+          style="
+            position: relative;
+            width: 300px;
+            height: 150px;
+            cursor: pointer;
+          "
+        >
+          <p
+            class="text-light bg-success fw-bold fs-6 text"
+            style="
+              position: absolute;
+              z-index: 3;
+              top: 5px;
+              left: 5px;
+              padding: 3px;
+            "
+          >
+            {{ movie.rate }}
+          </p>
+          <img
+            class=""
+            style="
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+            "
+            src="{{ movie.image }}"
+            alt="post's image"
+          />
+          <div class="hover_info">
+            <h3 class="text-light fw-bold fs-6 text movie_title">
+              {{ movie.title }}
+            </h3>
+            <button class="watch_btn" type="submit">
+              <a
+                style="width: 100%; height: 100%; text-decoration: none"
+                class="fw-bold fs-10 text-light text"
+                href="{% url 'movies_detail' movie.id %}"
+              >
+                Посмотреть
+              </a>
+            </button>
+          </div>
+          <div class="hover_info_back"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="need_auth">
+    <div>
+      <h1
+        style="
+          font-weight: 500;
+          font-size: 25px;
+          text-transform: uppercase;
+          color: #fff;
+        "
+      >
+        Чтобы просматривать контент нужно авторизоваться
+      </h1>
+      <button class="watch_btn" type="submit">
+        <a
+          style="
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            display: block;
+          "
+          class="fw-bold fs-10 text-light text"
+          href="{% url 'login_page' %}"
+        >
+          Войти
+        </a>
+      </button>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

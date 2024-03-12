@@ -1,18 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-  {% load static %}
+  {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
-    <title>Blogify</title>
+    <title>Moviepoisk</title>
   </head>
   <body>
-    <header class="header">
-      <h1 class="header_title">Blogify</h1>
+    <style>
+      * {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 0;
+        margin: 0;
+        color: #fff;
+      }
+
+      .meta {
+        font-size: 19px;
+        color: #a8a8a8;
+      }
+
+      .movie {
+        transition: 0.2s ease;
+        position: relative;
+        cursor: default;
+      }
+
+      .movie:hover {
+        transform: scale(1.2);
+        z-index: 10;
+      }
+
+      .watch_btn {
+        background-color: #ff5400;
+        border-radius: 25px;
+        cursor: pointer;
+        padding: 5px 20px;
+        border: none;
+      }
+
+      .hover_info {
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.2s ease-in-out;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        padding: 10px;
+        width: 100%;
+        z-index: 5;
+      }
+
+      .hover_info_back {
+        background-color: #000;
+        position: absolute;
+        bottom: -5px;
+        filter: blur(3px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 103%;
+        height: 80px;
+        z-index: 1;
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.2s ease-in-out;
+      }
+
+      .watch_btn:hover {
+        background-color: #e04b00;
+      }
+
+      .watch_btn a,
+      .watch_btn {
+        font-size: 20px;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .movie:hover .hover_info,
+      .movie:hover .hover_info_back {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .movie_title {
+        margin-bottom: 10px;
+      }
+
+      .head {
+        height: 60vh;
+        width: 100%;
+        display: flex;
+        position: relative;
+      }
+
+      .left {
+        z-index: 10;
+        width: 50%;
+        margin-right: 20px;
+      }
+
+      .right {
+        width: 50%;
+      }
+
+      .movie_detail_image {
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+      }
+
+      .info {
+        font-size: 14px;
+        color: #b2b2b2;
+      }
+
+      .tail {
+        margin: 0 auto;
+        width: 85%;
+      }
+
+      .search_form {
+        position: relative;
+      }
+
+      .found_movies {
+        top: 50px;
+        background-color: #000;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        position: absolute;
+      }
+
+      .movie_search {
+        height: 130px;
+      }
+
+      .movie_search_image {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 10px;
+      }
+
+      .movie_search_title {
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .movie_search_title:hover {
+        color: #fff;
+      }
+
+      .need_auth {
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .profile {
+        margin-right: 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .profile_image {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+    </style>
+    <header>
+      <nav
+        class="navbar navbar-expand-lg"
+        style="background-color: #000; height: 10vh"
+      >
+        <div class="container-fluid">
+          <h1 class="navbar-brand text-light fs-2 fw-bold" href="#">
+            Moviepoisk
+          </h1>
+          <button
+            class="navbar-toggler bg-secondary-emphasis"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'home_page' %}"
+                  >Главная</a
+                >
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'logout_page' %}"
+                  >Выйти</a
+                >
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'login_page' %}"
+                  >Войти</a
+                >
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link text-light" href="{% url 'top_page' %}"
+                  >Топ лучших</a
+                >
+              </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <div class="profile">
+              <img class="profile_image" src="https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg=" alt="">
+              <h4 style="font-weight: 600; font-size: 21px;">{{ user.username }}</h2>
+            </div>
+            <form class="d-flex search_form" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                name="title"
+              />
+              <div class="found_movies">
+                {% for movie in movies %}
+                <div class="movie_search">
+                  <img
+                    class="movie_search_image"
+                    src="{{movie.image}}"
+                    alt="found movie"
+                  />
+                  <a
+                    href="{% url 'movies_detail' movie.id %}"
+                    class="movie_search_title"
+                    >{{ movie.title }}</a
+                  >
+                </div>
+                {% endfor %}
+              </div>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
     </header>
     <main class="main">
-      <section class="section">{% block content %} {% endblock %}</section>
+      <section style="background-color: #000; padding: 30px; min-height: 90vh">
+        {% block content %} {% endblock %}
+      </section>
     </main>
   </body>
 </html>
